@@ -26,7 +26,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h4 class="header-title">Default Tabs</h4>
-                            <button type="button" class="btn btn-success" onclick="rutas('Mantenedor/Sitios','V_crearSitio');"><i class="uil uil-plus"></i>Nuevo</button>
+                            <button id='botonNuevoSitio' type="button" class="btn btn-success" onclick="crearSitio();"><i class="uil uil-plus"></i>Nuevo</button>
 
                         </div>
 
@@ -95,6 +95,92 @@
     </div>
 
 </div>
+
+<!-- Modal -->    
+<div class="modal" id="modalCrearSitio" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #51d1f6 ;">
+                <h4 class="modal-title" id="myCenterModalLabel" style="color: white;">Crear Sitio</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body" style="background-color: #51d1f6;">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="col-xl-6">
+                                    <div class="row-4">
+                                    
+                                        <div class="form-group">
+                                            <label for="projectname">Nombre</label>
+                                            <input type="text" id="nombreSitio" class="form-control" placeholder="Ingrese el nombre del Sitio">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="projectname">Nombre en eCommerce</label>
+                                            <input type="text" id="nombreEc" class="form-control" placeholder="Ingrese el nombre del Sitio">
+                                        </div>
+
+                                        <div class="form-group mb-0">
+                                            <label for="project-overview">Manejo Stock</label>
+                                            
+                                            <select id="estadoSitio" class="form-control select2" data-toggle="select2">
+                                                <option value="1">Consolidado</option>
+                                                <option value="2">por Bodega</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="projectname">Url</label>
+                                            <input type="text" id="urlSitio" class="form-control" placeholder="Ingrese el nombre del Sitio">
+                                        </div>
+
+                                        <div class="form-group mb-0">
+                                            <label for="project-overview">Estado Sitio</label>
+                                            
+                                            <select id="estadoSitio" class="form-control select2" data-toggle="select2">
+                                                <option value="0">Inactivo</option>
+                                                <option value="1">Activo</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group mb-0">
+                                            <label for="project-overview">Tipo Pago</label>
+                                            
+                                            <select id="tipoPago" class="form-control select2" data-toggle="select2">
+                                                
+                                            </select>
+
+                                            
+
+                                        </div>
+                                        <div class="form-group mb-0">
+                                            <label for="project-overview">Tipo Sitio</label>
+                                            
+                                            <select id="tipoSitio" class="form-control select2" data-toggle="select2">
+                                                <option value="1">eCommerce</option>
+                                                <option value="2">Marketplace</option>
+                                            </select>
+
+                                            
+
+                                        </div>
+
+                                    </div> <!-- end col-->
+
+                                    
+                                </div>
+                                <!-- end row -->
+
+                            </div> <!-- end card-body -->
+                        </div> <!-- end card-->
+                    </div> <!-- end col-->
+                </div>
+             </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
 <script src="../Modulos/Mantenedor/Sitios/controlador/C_sitios.js"></script>

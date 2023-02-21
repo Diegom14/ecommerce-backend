@@ -43,7 +43,7 @@ function getListaSitios() {
         .then(Response => Response.json())
         .then(ojb => {
             $("#content_principal").LoadingOverlay("hide");
-            console.log(ojb);
+            //console.log(ojb);
             let body = document.getElementsByTagName('tbody')[0];
             //console.log(body);
             if (body) {
@@ -56,17 +56,18 @@ function getListaSitios() {
             let tablaSitios = document.getElementById('tablaSitios');
             let bodySitios = document.createElement('tbody');
             bodySitios.setAttribute('id', 'lista_html');
-
+            
             //token = sessionStorage.getItem("token");
-            //console.log(ojb);
-            Object.entries(ojb)
+            //console.log(Object.entries(ojb));
+            Object.entries(ojb['sitios'])
             .map(entry => {
                 const [key, value] = entry;
                 let row = document.createElement('tr');
                 
+                
                 Object.entries(value).map(dataCol =>{
                     const [key2, value2] = dataCol;
-                    //console.log(value2)
+                   
                     let col = document.createElement('td');
                     
                     col.innerText = value2;
@@ -87,21 +88,64 @@ function getListaSitios() {
             tablaSitios.appendChild(bodySitios);
             
             datatable_ini('tablaSitios');
-            //$("#tablaOrdenes").DataTable();
 
+            //$("#tablaOrdenes").DataTable();
+            let selectTipoPago = document.getElementById('tipoPago');
+            let child = selectTipoPago.lastElementChild;
+            while(child){
+                selectTipoPago.removeChild(child);
+                child = selectTipoPago.lastElementChild;
+            }
+
+            
+            const fragment = document.createDocumentFragment();
+            console.log(selectTipoPago)
+            let option = document.createElement('option');
+            option.text = 'SELECCIONE';
+            fragment.appendChild(option);
+            Object.entries(ojb['tipo_pago'])
+            .map(entry => {
+                const value = entry;
+                option = document.createElement('option');
+                option.text = value[1]['DESCRIPCION_CI'];
+                option.value = value[1]['CODIGO_CI'];
+                //console.log(value[1]['CODIGO_CI']);
+                fragment.appendChild(option);
+            })
+
+            selectTipoPago.appendChild(fragment);
 
         })
         .catch(err => {
             aler_simple(2, 'Error', 'No existen Registros ');
         });
 
+       
 
 
 
 }
 
 function crearSitio(){
-
+    let modal = document.getElementById("modalCrearSitio");
+    console.log(modal);
+    let btn = document.getElementById("botonNuevoSitio");
+    
+    
+    let span = document.getElementsByClassName("close")[0];
+    btn.onclick = function() {
+        modal.style.display = "block";
+      }
+      
+      // When the user clicks on <span> (x), close the modal
+      span.onclick = function() {
+        modal.style.display = "none";
+    }
+    window.onclick = function(event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+    }
 }
 
 

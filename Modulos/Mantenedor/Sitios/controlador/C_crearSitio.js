@@ -100,6 +100,9 @@ function getListaSitios() {
 
 }
 
+function crearSitio(){
+    
+}
 
 
 
