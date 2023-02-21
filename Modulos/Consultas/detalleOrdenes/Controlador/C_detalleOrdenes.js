@@ -1,29 +1,42 @@
+if (document.readyState !== 'loading') {
+    onReady();
+} else {
+    document.addEventListener('DOMContentLoaded', function () {
+        onReady();
+    });
+}
+
+
+function onReady(){
+    if (id_user === null) {
+        window.location.href = 'index.html';
+    } else {
+        $("#span_nombre_usuario").html(nombre_usuario)
+    }
+    
+    getData();
+
+}
+
 $('.fecha_ranger').daterangepicker("setDate", new Date());
 
 
 
-function getData2() {
-    filtroEstado = document.querySelector("#estado").value;
-    filtroFecha = document.querySelector("#fecha").value;
-    filtroTipo = document.querySelector("#tipo").value;
 
-    let jsondata = {
-        "estado": filtroEstado,
-        "fecha": filtroFecha,
-        "tipo": filtroTipo
-    }
-    console.log(jsondata);
-}
 
 
 function getData() {
 
     let data = new Object();
-    data['estado'] = document.getElementById("estado").value;
-    data['fecha'] = document.getElementById("fecha").value;
-    data['tipo'] = document.getElementById("tipo").value;
-    data['token'] = sessionStorage.getItem("token");
-    $("#content_principal").LoadingOverlay("show");
+    
+
+
+    data['iduser'] = sessionStorage.getItem("id_user");
+    data['npedido'] = sessionStorage.getItem("nPedido");
+    data['central'] = sessionStorage.getItem("central");
+    data['token'] = token = sessionStorage.getItem("token");
+    console.log(data);
+    //$("#content_principal").LoadingOverlay("show");
 
     var myHeaders = new Headers();
 
@@ -34,26 +47,15 @@ function getData() {
         headers: myHeaders,
         redirect: 'follow'
     };
-    fetch(url_base + "/reportes/ordenes", requestOptions)
+    fetch(url_base + "/reportes/ordenes_detalle/", requestOptions)
         .then(Response => Response.json())
         .then(ojb => {
-            $("#content_principal").LoadingOverlay("hide");
+            //$("#content_principal").LoadingOverlay("hide");
 
-            let body = document.getElementsByTagName('tbody')[0];
-            console.log(body);
-            if (body) {
-                body.remove();
+            
+            console.log(ojb);
 
-                $("#tablaOrdenes").dataTable().fnDestroy();
-
-            }
-            $("#content_principal").LoadingOverlay("hide", true);
-            let tablaListaOrdenes = document.getElementById('tablaOrdenes');
-            let bodyOrdenes = document.createElement('tbody');
-            bodyOrdenes.setAttribute('id', 'lista_htm');
-
-
-            Object.entries(ojb['listado_ordenes'])
+            /*Object.entries(ojb['listado_ordenes'])
                 .map(entry => {
                     const [key, value] = entry;
                     //console.log(Object.values(value));
@@ -75,6 +77,7 @@ function getData() {
             
             datatable_ini('tablaOrdenes');
             $("#tablaOrdenes").DataTable();
+            */
 
 
         })

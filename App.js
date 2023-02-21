@@ -3,7 +3,9 @@ let nombre_usuario = sessionStorage.getItem("nombre");
 let id_user = sessionStorage.getItem("id_user");
 
 if (id_user === null) {
-    window.location.href = 'index.php';
+    window.location.href = 'index.html';
+    
+    
 } else {
     $("#span_nombre_usuario").html(nombre_usuario)
 }

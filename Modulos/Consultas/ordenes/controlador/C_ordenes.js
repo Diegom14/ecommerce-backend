@@ -8,10 +8,7 @@ if (document.readyState !== 'loading') {
 }
 
 
-function onReady(){
-
-    
-}
+function onReady(){}
 
 $('.fecha_ranger').daterangepicker("setDate", new Date());
 
@@ -44,7 +41,7 @@ function getData() {
             $("#content_principal").LoadingOverlay("hide");
 
             let body = document.getElementsByTagName('tbody')[0];
-            console.log(body);
+            
             if (body) {
                 body.remove();
 
@@ -57,27 +54,24 @@ function getData() {
             bodyOrdenes.setAttribute('id', 'lista_htm');
 
             token = sessionStorage.getItem("token");
-
+            
             Object.entries(ojb['listado_ordenes'])
             .map(entry => {
                 const [key, value] = entry;
-                //console.log(Object.values(value));
                 let row = document.createElement('tr');
                 Object.entries(value).map(dataCol =>{
                     const [key2, value2] = dataCol;
                     let col = document.createElement('td');
                     if(key2 =='npedido'){
-                        console.log(value['sitio']);
-                        sitio = value['sitio'];
+                        sitio = value['sitio'].toString();
                         nPedido = value['npedido'];
-                        console.log(value['npedido']);
+                        central = value['centra'];
                         let aTag = document.createElement('a');
-                        //console.log(aTag);
-                        aTag.setAttribute('href','javascript: detalleOrdenes(sitio,nPedido,token);');
+                        funcion = 'javascript: detalleOrdenes("'+nPedido+'","'+central+'");';
                         
+                        aTag.setAttribute('href',funcion);
                         aTag.innerText = value2;
                         col.appendChild(aTag);
-                        //console.log(value2);
 
                     } else{
                         col.innerText = value2;
@@ -113,34 +107,13 @@ function getData() {
 
 }
 
-function detalleOrdenes(idSitio,nPedido,token){
-
-    let data = new Object();
-    data['idSitio'] = idSitio;
-    data['nPedido'] = nPedido;
-    data['token'] = token;
-
-    rutas('detalleOrdenes', 'detalleOrdenes');
-    var myHeaders = new Headers();
-
-    myHeaders.append("Content-Type", "application/json");
-    var requestOptions = {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: myHeaders,
-        redirect: 'follow'
-    };
-    fetch(url_base + "/reportes/ordenes", requestOptions)
-        .then(Response => Response.json())
-        .then(ojb => {
-            rutas('detalleOrdenes', 'detalleOrdenes');
-
-        })
-        .catch(err => {
-            alert('No existen Registros')
-        });
+function detalleOrdenes(nPedido,central){
 
     
-
+    sessionStorage.setItem("nPedido", nPedido);
+    sessionStorage.setItem("central", central);
+    
+    rutas('Consultas/detalleOrdenes', 'detalleOrdenes');
+    
 
 }

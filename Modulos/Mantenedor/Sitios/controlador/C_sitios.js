@@ -13,9 +13,7 @@ function onReady(){
     } else {
         $("#span_nombre_usuario").html(nombre_usuario)
     }
-
     getListaSitios();
-
 
 }
 
@@ -43,12 +41,10 @@ function getListaSitios() {
         .then(Response => Response.json())
         .then(ojb => {
             $("#content_principal").LoadingOverlay("hide");
-            //console.log(ojb);
+            
             let body = document.getElementsByTagName('tbody')[0];
-            //console.log(body);
             if (body) {
                 body.remove();
-
                 $("#tablaSitios").dataTable().fnDestroy();
 
             }
@@ -57,52 +53,36 @@ function getListaSitios() {
             let bodySitios = document.createElement('tbody');
             bodySitios.setAttribute('id', 'lista_html');
             
-            //token = sessionStorage.getItem("token");
-            //console.log(Object.entries(ojb));
             Object.entries(ojb['sitios'])
             .map(entry => {
                 const [key, value] = entry;
-                let row = document.createElement('tr');
-                
+                let row = document.createElement('tr');  
                 
                 Object.entries(value).map(dataCol =>{
                     const [key2, value2] = dataCol;
-                   
                     let col = document.createElement('td');
-                    
                     col.innerText = value2;
-                    
-                    
-                    
-                    
                     row.appendChild(col);
-                    
-                    
                 })
 
                 bodySitios.appendChild(row);
-                
-
 
             })
-            tablaSitios.appendChild(bodySitios);
-            
+            tablaSitios.appendChild(bodySitios);            
             datatable_ini('tablaSitios');
 
-            //$("#tablaOrdenes").DataTable();
             let selectTipoPago = document.getElementById('tipoPago');
             let child = selectTipoPago.lastElementChild;
             while(child){
                 selectTipoPago.removeChild(child);
                 child = selectTipoPago.lastElementChild;
             }
-
             
             const fragment = document.createDocumentFragment();
-            console.log(selectTipoPago)
             let option = document.createElement('option');
             option.text = 'SELECCIONE';
             fragment.appendChild(option);
+
             Object.entries(ojb['tipo_pago'])
             .map(entry => {
                 const value = entry;
