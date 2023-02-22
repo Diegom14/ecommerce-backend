@@ -35,7 +35,7 @@
                                             <li class="breadcrumb-item active">Order Details</li>
                                         </ol>
                                     </div>
-                                    <h4 class="page-title">Order Details</h4>
+                                    <h4 class="page-title">Detalle de la Orden</h4>
                                 </div>
                             </div>
                         </div>     
@@ -47,19 +47,20 @@
                                 <div class="horizontal-steps mt-4 mb-4 pb-5">
                                     <div class="horizontal-steps-content">
                                         <div class="step-item" id="ordenRecibida">
-                                            <span data-toggle="tooltip" data-placement="bottom" title="" data-original-title="20/08/2018 07:24 PM">Recibida</span>
+                                            <span id="fechaRecibida" data-toggle="tooltip" data-placement="bottom" title="" >Recibida</span>
                                         </div>
                                         <div class="step-item" id="ordenDocumentada">
-                                            <span data-toggle="tooltip" data-placement="bottom" title="" data-original-title="21/08/2018 11:32 AM">Documentada</span>
+                                            <span id="fechaDocumentada" data-toggle="tooltip" data-placement="bottom" title="" >Documentada</span>
                                         </div>
                                         <div class="step-item" id="ordenDespachada">
-                                            <span data-toggle="tooltip" data-placement="bottom">Enviada</span>
+                                            <span id="fechaDespachada" data-toggle="tooltip" data-placement="bottom">Enviada</span>
                                         </div>
                                         <div class="step-item" id="ordenEntregada">
-                                            <span>Entregada</span>
+                                            <span id="fechaEntregada" data-toggle="tooltip" data-placement="bottom">Entregada</span>
                                         </div>
                                         <!--<div class="step-item current">
-                                            <span>Delivered</span>
+                                                <span id="fechaRecibida" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="20/08/2018 07:24 PM">Recibida</span>
+
                                         </div>-->
                                     </div>
         
@@ -74,7 +75,7 @@
                             <div class="col-lg-8">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 id="tituloDetalle" class="header-title mb-3">Detalle de la Orden #12537</h4>
+                                        <h4 id="tituloDetalle" class="header-title mb-3">Detalle del Pedido #12537</h4>
             
                                         <div class="table-responsive">
                                             <table class="table mb-0" id="detalleOrden">
@@ -83,8 +84,10 @@
                                                     <th>SKU</th>
                                                     <th>Descripción</th>
                                                     <th>Precio</th>
+                                                    <th>Cantidad</th>
                                                     <th>Descuento</th>
                                                     <th>Total</th>
+                                                    
                                                 </tr>
                                                 </thead>
                                                 
@@ -158,14 +161,15 @@
         
                             <div class="col-lg-4">
                                 <div class="card">
-                                    <div class="card-body">
+                                    <div class="card-body" id="infoDelivery">
                                         <h4 class="header-title mb-3">Información del envío</h4>
             
                                         <div class="text-center">
-                                            <i class="mdi mdi-truck-fast h2 text-muted"></i>
-                                            <h5><b>UPS Delivery</b></h5>
+                                            <i id="logoEnvio" class=""></i>
+                                            <!--<h5><b>UPS Delivery</b></h5>
                                             <p class="mb-1"><b>Order ID :</b> xxxx235</p>
                                             <p class="mb-0"><b>Payment Mode :</b> COD</p>
+                                            -->
                                         </div>
                                     </div>
                                 </div>
