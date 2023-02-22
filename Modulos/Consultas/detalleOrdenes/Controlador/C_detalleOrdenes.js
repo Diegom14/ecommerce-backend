@@ -54,23 +54,55 @@ function getData() {
 
             
             console.log(ojb);
-
+            
+            let estadoOrden = '';
+            let avanceLineaPro = '0%';
             Object.entries(ojb['estado'])
                 .map(entry => {
                     const [key, value] = entry;
+                    
                     switch(key){
                         case 'iniciar':
-                            let ordenRecibida = document.getElementById('ordenRecibida');
-                            ordenRecibida.classList.add("current");
+                            //let ordenRecibida = document.getElementById('ordenRecibida');
+                            //ordenRecibida.classList.add("current");
+                            estadoOrden = 'ordenRecibida';
+                            avanceLineaPro = '0%';
+                            break;
+
+                        case 'documntada':
+                            //let ordenRecibida = document.getElementById('ordenRecibida');
+                            //ordenRecibida.classList.add("current");
+                            estadoOrden = 'ordenDocumentada';
+                            avanceLineaPro = '33%';
+                            break;
+                        
+                        case 'despachada':
+                            //let ordenRecibida = document.getElementById('ordenRecibida');
+                            //ordenRecibida.classList.add("current");
+                            estadoOrden = 'ordenDespachada';
+                            avanceLineaPro = '66%';
+                            break;
+                            
+                        case 'entregada':
+                            //let ordenRecibida = document.getElementById('ordenRecibida');
+                            //ordenRecibida.classList.add("current");
+                            estadoOrden = 'ordenEntregada';
+                            avanceLineaPro = '100%';
                             break;
                     } 
 
                 })
+            //console.log(Object.keys(ojb['estado']).length);
+            console.log(estadoOrden,avanceLineaPro)
+            document.getElementById(estadoOrden).classList.add("current");
+            
+            document.getElementById('lineaProgreso').style.width = avanceLineaPro;
 
                 
-            let bodyResumen = document.createElement('tbody');
             
             //Resumen 
+            let bodyResumen = document.createElement('tbody');
+
             Object.entries(ojb['sumamary'])
             .map(entry => {
                 const [key, value] = entry;
@@ -108,7 +140,7 @@ function getData() {
                 
                 
                  
-                console.log(value);
+                
                 bodyResumen.appendChild(row);
                 })
 
@@ -175,8 +207,10 @@ function getData() {
             
             
             document.getElementById('infoPago').appendChild(fragment);
+
             
-            document.getElementById('lineaProgreso').style.width = '66%';
+            
+            
 
         })
         .catch(err => {
