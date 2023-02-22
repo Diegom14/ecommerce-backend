@@ -35,7 +35,7 @@ function getData() {
     data['npedido'] = sessionStorage.getItem("nPedido");
     data['central'] = sessionStorage.getItem("central");
     data['token'] = token = sessionStorage.getItem("token");
-    console.log(data);
+   
     //$("#content_principal").LoadingOverlay("show");
 
     var myHeaders = new Headers();
@@ -55,30 +55,128 @@ function getData() {
             
             console.log(ojb);
 
-            /*Object.entries(ojb['listado_ordenes'])
+            Object.entries(ojb['estado'])
                 .map(entry => {
                     const [key, value] = entry;
-                    //console.log(Object.values(value));
-                    let row = document.createElement('tr');
-                    Object.values(value).map(fila => {
-
-                        let col = document.createElement('td');
-                        col.innerText = fila;
-                        row.appendChild(col);
-
-                    })
-
-                    bodyOrdenes.appendChild(row);
-
-
+                    switch(key){
+                        case 'iniciar':
+                            let ordenRecibida = document.getElementById('ordenRecibida');
+                            ordenRecibida.classList.add("current");
+                            break;
+                    } 
 
                 })
-            tablaListaOrdenes.appendChild(bodyOrdenes);
-            
-            datatable_ini('tablaOrdenes');
-            $("#tablaOrdenes").DataTable();
-            */
 
+                
+            let bodyResumen = document.createElement('tbody');
+            
+            //Resumen 
+            Object.entries(ojb['sumamary'])
+            .map(entry => {
+                const [key, value] = entry;
+                let row = document.createElement('tr');
+                let col = document.createElement('td');
+                let colDetalle = document.createElement('td');
+                switch(key){
+                    case 'Tax':
+                        colDetalle.innerText = 'Impuesto';
+                        row.appendChild(colDetalle);
+                        col.innerText = value;
+                        row.appendChild(col);
+                        break;
+                    
+                    case 'shipping':
+                        colDetalle.innerText = 'Envío';
+                        row.appendChild(colDetalle);
+                        col.innerText = value;
+                        row.appendChild(col);
+                        break;
+                    
+                    case 'total':
+                        colDetalle.innerText = 'Total';
+                        row.appendChild(colDetalle);
+                        col.innerText = value;
+                        row.appendChild(col);
+                        break;
+                    case 'total_neto':
+                        colDetalle.innerText = 'Total Neto';
+                        row.appendChild(colDetalle);
+                        col.innerText = value;
+                        row.appendChild(col);
+                        break;
+                }
+                
+                
+                 
+                console.log(value);
+                bodyResumen.appendChild(row);
+                })
+
+            document.getElementById('tablaResumen').appendChild(bodyResumen);
+            
+            //Información de envío
+
+            
+            let br = document.createElement('br');
+            let data = '';
+            Object.entries(ojb['shipping'])
+            .map(entry => {
+                const [key, value] = entry;
+                if(value){
+                    data = data + value +' <br>';
+                    //fragment.appendChild(value);
+                    //console.log(data)
+                }
+                
+                })
+
+                //document.getElementById('shipping').appendChild(fragment);
+            
+            let parrafo = document.createElement('p');
+            
+            parrafo.innerHTML = data;
+            
+            document.getElementById('shipping').appendChild(parrafo);
+            
+            //Información de Pago
+
+            
+            
+            
+            let fragment = document.createDocumentFragment();
+            Object.entries(ojb['billing'])
+            .map(entry => {
+                const [key, value] = entry;
+                let dataPago = document.createElement('p');
+                //let bold = document.createElement('b');
+                switch(key){
+                    case 'autorizacionpago_ph':
+                        dataPago.innerHTML = '<b>Código Autorización:</b> ' + value;
+                        fragment.appendChild(dataPago);
+                        break;
+                    
+                    case 'tipo_pago':
+                        dataPago.innerHTML = '<b>Tipo Pago:</b> ' + value;
+                        fragment.appendChild(dataPago);
+                        break;
+
+                    case 'fecha_pago':
+                        dataPago.innerHTML = '<b>Fecha de Pago:</b> ' + value;
+                        fragment.appendChild(dataPago);
+                        break;
+                }
+                
+                })
+
+                //document.getElementById('shipping').appendChild(fragment);
+            
+            
+            
+            
+            
+            document.getElementById('infoPago').appendChild(fragment);
+            
+            document.getElementById('lineaProgreso').style.width = '66%';
 
         })
         .catch(err => {
