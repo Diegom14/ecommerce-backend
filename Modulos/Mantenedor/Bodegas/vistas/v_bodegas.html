@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<div class="container-fluid">
+
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Bodegas</a></li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Mantenedor</a></li>
+                        <li class="breadcrumb-item active">Mantenedor de bodegas</li>
+                    </ol>
+                </div>
+                <h4 class="page-title">Mantenedor de Bodegas</h4>
+            </div>
+        </div>
+    </div>
+
+    <!-- end page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h4 class="header-title">Default Tabs</h4>
+                            <button id='botonNuevoSitio' type="button" class="btn btn-success" onclick="crearSitio();"><i class="uil uil-plus"></i>Nuevo</button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-centered mb-0 table dt-responsive nowrap w-100" id="tablaSitios">
+                            <thead class="thead-light">
+                                <tr>
+                                    
+                                    <th>IDsitio</th>
+                                    <th>Nombre</th>
+                                    <th>Manejor Stock</th>
+                                    <th>Url</th>
+                                    <th>Estado</th>
+                                    <th>Tipo Pago</th>
+                                    
+                                    <th style="width: 125px;">Tipo Sitio</th>
+                                </tr>
+                            </thead>
+                            <!--<tbody>
+                                <tr>
+                                    <td>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                            <label class="custom-control-label" for="customCheck2">&nbsp;</label>
+                                        </div>
+                                    </td>
+                                    <td><a href="apps-ecommerce-orders-details.html" class="text-body font-weight-bold">#BM9708</a> </td>
+                                    <td>
+                                        August 05 2018 <small class="text-muted">10:29 PM</small>
+                                    </td>
+                                    <td>
+                                        <h5><span class="badge badge-success-lighten"><i class="mdi mdi-coin"></i> Paid</span></h5>
+                                    </td>
+                                    <td>
+                                        $176.41
+                                    </td>
+                                    <td>
+                                        Mastercard
+                                    </td>
+                                    <td>
+                                        <h5><span class="badge badge-info-lighten">Shipped</span></h5>
+                                    </td>
+                                    <td>
+                                        <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-eye"></i></a>
+                                        <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                        <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
+                                    </td>
+                                </tr>
+
+
+
+
+                            </tbody>-->
+                        </table>
+                    </div>
+                </div>
+                <!-- end card-body-->
+            </div>
+            <!-- end card-->
+        </div>
+        <!-- end col -->
+    </div>
+
+</div>
+
+<!-- Modal -->    
+
+<div class="modal" id="modalCrearSitio" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #51d1f6 ;">
+                <h4 class="modal-title" id="myCenterModalLabel" style="color: white;">Crear Sitio</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body" style="background-color: #51d1f6;">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="col-xl-6">
+                                    <div class="row-4">
+                                    
+                                        <div class="form-group">
+                                            <label for="projectname">Tienda</label>
+                                            <select id="tienda" name="tienda" class="form-control select2" data-toggle="select2">
+                                                <option value="1">eCommerce</option>
+                                                <option value="2">Marketplace</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group mb-0">
+                                            <label for="project-overview">Local de Stock</label>
+                                            
+                                            <select id="localStock" name="localStock" class="form-control select2" data-toggle="select2">
+                                                
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="projectname">Stock Seguridad</label>
+                                            <input type="text" id="localStock" name="localStock" class="form-control" placeholder="Ingrese el nombre del Sitio">
+                                        </div>
+                                        
+
+                                        <div class="form-group">
+                                            <label for="projectname">Mínimo Curva</label>
+                                            <input type="text" id="localStock" name="localStock" class="form-control" placeholder="Ingrese el nombre del Sitio">
+                                        </div>
+
+                                        <div class="form-group mb-0">
+                                            <label for="project-overview">Estado Local</label>
+                                            
+                                            <select id="localStock" name="localStock" class="form-control select2" data-toggle="select2">
+                                                <option value="0">Inactivo</option>
+                                                <option value="1">Activo</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group mb-0">
+                                            <label for="project-overview">Turno Recojo</label>
+                                            
+                                            <select id="tipoPago" class="form-control select2" data-toggle="select2">
+                                                
+                                            </select>
+
+                                            
+
+                                        </div>
+                                        <div class="form-group mb-0">
+                                            <label for="project-overview">Departamento</label>
+                                            
+                                            <select id="localStock" name="localStock" class="form-control select2" data-toggle="select2">
+                                                <option value="1">eCommerce</option>
+                                                <option value="2">Marketplace</option>
+                                            </select>
+
+                                            
+
+                                        </div>
+                                        <div class="form-group mb-0">
+                                            <label for="project-overview">Provincia</label>
+                                            
+                                            <select id="tipoSitio" class="form-control select2" data-toggle="select2">
+                                                <option value="1">eCommerce</option>
+                                                <option value="2">Marketplace</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group mb-0">
+                                            <label for="project-overview">Distrito</label>
+                                            
+                                            <select id="tipoSitio" class="form-control select2" data-toggle="select2">
+                                                <option value="1">eCommerce</option>
+                                                <option value="2">Marketplace</option>
+                                            </select>
+
+                                            
+
+                                        </div>
+
+
+
+                                    </div> <!-- end col-->
+
+                                    
+                                </div>
+                                <!-- end row -->
+
+                            </div> <!-- end card-body -->
+                        </div> <!-- end card-->
+                    </div> <!-- end col-->
+                </div>
+             </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<script src="../Modulos/Mantenedor/Bodegas/controlador/C_bodegas.js"></script>
+
+</html>

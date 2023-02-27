@@ -107,9 +107,8 @@ function getListaSitios() {
 }
 
 function crearSitio(){
-    $("#modalCrearSitio").modal('show');
     let modal = document.getElementById("modalCrearSitio");
-    /*
+    console.log(modal);
     let btn = document.getElementById("botonNuevoSitio");
     
     
@@ -126,7 +125,7 @@ function crearSitio(){
         if (event.target == modal) {
           modal.style.display = "none";
         }
-    }*/
+    }
 }
 
 
