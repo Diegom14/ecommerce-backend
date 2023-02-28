@@ -13,7 +13,7 @@ function onReady(){
     } else {
         $("#span_nombre_usuario").html(nombre_usuario)
     }
-    getListaSitios();
+    //getListaSitios();
 
 }
 
@@ -106,26 +106,9 @@ function getListaSitios() {
 
 }
 
-function crearSitio(){
-    let modal = document.getElementById("modalCrearSitio");
-    console.log(modal);
-    let btn = document.getElementById("botonNuevoSitio");
+function crearBodega(){
+    $("#modalCrear").modal('show');
     
-    
-    let span = document.getElementsByClassName("close")[0];
-    btn.onclick = function() {
-        modal.style.display = "block";
-      }
-      
-      // When the user clicks on <span> (x), close the modal
-      span.onclick = function() {
-        modal.style.display = "none";
-    }
-    window.onclick = function(event) {
-        if (event.target == modal) {
-          modal.style.display = "none";
-        }
-    }
 }
 
 
