@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+
+
+<div class="" style="margin: 10px;">
+
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Consulta / Reportes</a></li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Ordenes</a></li>
+                        <li class="breadcrumb-item active">Consulta de Ordenes</li>
+                    </ol>
+                </div>
+                <h4 class="page-title">Consulta de Ordenes</h4>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form class="form-inline">
+                                <div class="form-group mx-sm-3 mb-2">
+                                    <label for="status-select" class="mr-2">Fecha</label>
+                                    <input type="text" id="fecha" name="fecha" data-date-format="dd/mm/yyyy - dd/mm/yyyy" class="fecha_ranger form-control date" data-toggle="date-picker" data-cancel-class="btn-warning">
+                                </div>
+                                <div class="form-group mx-sm-3 mb-2">
+                                    <label for="status-select" class="mr-2">Estado</label>
+                                    <select class="custom-select" id="estado" name="estado">
+                                        <option selected value="0">Todos</option>
+                                        <option value="1">Sin asignar</option>
+                                        <option value="2">Asignada</option>
+                                        <option value="3">Error: coordenadas geográficas</option>
+                                        <option value="4">Error: stock insuficiente</option>
+                                        <option value="5">Anulada</option>
+                                        <option value="6">Anulación parcial</option>
+                                        <option value="7">Ya existe en sistema</option>
+                                        <option value="8">Pago pendiente</option>
+                                        <option value="9">Asignada parcialmente</option>
+                                        <option value="10">Expirada</option>
+                                        <option value="11">Expirada, asignación parcial</option>
+                                        <option value="12">Reasignación en proceso"</option>
+                                        <option value="13">Pagada, pendiente envío forusapp</option>
+                                    </select>
+                                </div>
+                                <div class="form-group mx-sm-3 mb-2">
+                                    <label for="status-select" class="mr-2">Tipo</label>
+                                    <select class="custom-select" id="tipo">
+                                        <option selected="">Seleccione...</option>
+                                        <option value="1">Ecommerce</option>
+                                        <option value="2">Marketplace</option>  
+                                    </select>
+                                </div>
+                                <button type="button" onclick="getData()">Consultar</button>
+                            </form>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- end card-body-->
+            </div>
+            <!-- end card-->
+        </div>
+        <!-- end col -->
+    </div>
+    <!-- end page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped dt-responsive nowrap w-100" id="tablaOrdenes">
+                            <thead class="thead-light">
+                                <tr>
+                                    <!--<th style="width: 20px;">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                            <label class="custom-control-label" for="customCheck1">&nbsp;</label>
+                                        </div>
+                                    </th>-->
+                                    <th>Item</th>
+                                    <th>N Pedido</th>
+                                    <th>Cliente</th>
+                                    <th>Fecha</th>
+                                    <th>N Orden</th>
+                                    <th>Sitio</th>
+                                    <th>Estado Ec</th>
+                                    <th>Estado Sial</th>
+                                    <th>Bodega</th>
+                                    <th>Dato</th>
+
+                                </tr>
+                            </thead>
+
+                           </table>
+                    </div>
+                </div>
+                <!-- end card-body-->
+            </div>
+            <!-- end card-->
+        </div>
+        <!-- end col -->
+    </div>
+
+</div>
+
+</body>
+</html>
+<script src="../Modulos/Consultas/catalogos/controlador/C_listaCatalogo.js"></script>
