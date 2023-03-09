@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+    
 <div class="container-fluid">
 
     <!-- start page title -->
@@ -8,14 +9,21 @@
             <div class="page-title-box">
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Sitios</a></li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Catálogo</a></li>
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Mantenedor</a></li>
-                        <li class="breadcrumb-item active">Mantenedor de sitios</li>
+                        <li class="breadcrumb-item active">Mantenedor de Catálogo</li>
                     </ol>
                 </div>
-                <h4 class="page-title">Mantenedor de sitios</h4>
+                <h4 class="page-title">Mantenedor de Catálogo</h4>
             </div>
         </div>
+    </div>
+
+    <div class="container">
+        <input type="file" id="file-input" >
+        <table class="table" id="excel-table">
+            <!-- table rows and columns will be added here dynamically -->
+        </table>
     </div>
 
     <!-- end page title -->
@@ -26,7 +34,6 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <button id='botonNuevoSitio' type="button" class="btn btn-success" onclick="crearSitio();"><i class="uil uil-plus"></i>Nuevo</button>
-
                         </div>
 
                     </div>

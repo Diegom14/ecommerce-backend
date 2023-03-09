@@ -1,3 +1,4 @@
+console.log('holaaaaa')
 if (document.readyState !== 'loading') {
     onReady();
 } else {
@@ -8,12 +9,36 @@ if (document.readyState !== 'loading') {
 
 
 function onReady(){
+    
     if (id_user === null) {
-        window.location.href = 'index.php';
+        window.location.href = 'index.html';
     } else {
         $("#span_nombre_usuario").html(nombre_usuario)
     }
-    getListaSitios();
+    const input = document.getElementById('file-input');
+    const table = document.getElementById('excel-table');
+    console.log('rows');
+    input.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        
+        readXlsxFile(file).then((rows) => {
+            // Clear the table
+            table.innerHTML = '';
+
+            // Add the rows to the table
+            
+            rows.forEach((row) => {
+                const tr = document.createElement('tr');
+                row.forEach((cell) => {
+                    const td = document.createElement('td');
+                    td.textContent = cell;
+                    tr.appendChild(td);
+                });
+                table.appendChild(tr);
+            });
+        });
+    });
+    //getListaSitios();
 
 }
 
@@ -108,7 +133,7 @@ function getListaSitios() {
 
 function crearSitio(){
     let modal = document.getElementById("modalCrearSitio");
-    console.log(modal);
+    
     let btn = document.getElementById("botonNuevoSitio");
     
     
