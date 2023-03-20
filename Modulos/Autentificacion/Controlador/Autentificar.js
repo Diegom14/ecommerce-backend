@@ -43,6 +43,13 @@ function login_proceso(id) {
 
 }
 
+function showModal(){
+    $("#modalCambioClave").modal('show');
+}
+
+function cambioClave() {
+
+}
 
 function aler_simple(icon, titulo, message) {
 

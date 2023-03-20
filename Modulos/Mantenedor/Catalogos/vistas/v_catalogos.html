@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html>
-    
+    <style type="text/css">
+        .cargarArchivo {
+            background-color: indigo;
+            color: white;
+            padding: 0.5rem;
+            font-family: sans-serif;
+            border-radius: 0.3rem;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+    </style>
 <div class="container-fluid">
 
     <!-- start page title -->
@@ -19,12 +29,8 @@
         </div>
     </div>
 
-    <div class="container">
-        <input type="file" id="file-input" >
-        <table class="table" id="excel-table">
-            <!-- table rows and columns will be added here dynamically -->
-        </table>
-    </div>
+
+    
 
     <!-- end page title -->
     <div class="row">
@@ -33,63 +39,72 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-lg-12">
-                            <button id='botonNuevoSitio' type="button" class="btn btn-success" onclick="crearSitio();"><i class="uil uil-plus"></i>Nuevo</button>
+                            <input type="file" id="excelFile" hidden>
+                            <label class="cargarArchivo" for="excelFile">Importar Archivo</label>
+                            <a class="cargarArchivo" href="../../../../public/files/" download="catalogo.xlsx">Descargar Template</a>
+                            
                         </div>
-
+                        
+                        
+                    </div>
+                    <div style="justify-content: flex-end; text-align: right;">
+                        <button id='botonCargarExcel' type="button" class="btn btn-success"><i class="uil uil-plus right"></i>Cargar</button>
                     </div>
 
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-centered mb-0 table dt-responsive nowrap w-100" id="tablaSitios">
-                            <thead class="thead-light">
+                        <table class="table table-centered mb-0" id="tablaExcel" name="tablaExcel">
+                            <thead class="thead-light" id="theadExcel">
                                 <tr>
-                                    
-                                    <th>IDsitio</th>
-                                    <th>Nombre</th>
-                                    <th>Manejor Stock</th>
-                                    <th>Url</th>
-                                    <th>Estado</th>
-                                    <th>Tipo Pago</th>
-                                    
-                                    <th style="width: 125px;">Tipo Sitio</th>
+                                    <th>sku</th>
+                                    <th>product_name</th>
+                                    <th>product_bullets</th>
+                                    <th>product_description</th>
+                                    <th>image_url</th>
+                                    <th>product_weight</th>
+                                    <th>product_length</th>
+                                    <th>product_width</th>
+                                    <th>product_height</th>
+                                    <th>package_weight</th>
+                                    <th>package_length</th>
+                                    <th>package_width</th>
+                                    <th>package_height</th>
+                                    <th>boost</th>
+                                    <th>tallaweb</th>
+                                    <th>colorweb</th>
+                                    <th>categoria</th>
+                                    <th>subcategoria</th>
+                                    <th>genero</th>
+                                    <th>estilo</th>
+                                    <th>colecciones</th>
+                                    <th>temporada</th>
+                                    <th>modelo</th>
+                                    <th>codmodelo</th>
+                                    <th>codcolor</th>
+                                    <th>marca</th>
+                                    <th>tecnologias</th>
+                                    <th>caracteristicas</th>
+                                    <th>tipoboardshort</th>
+                                    <th>tipobikini</th>
+                                    <th>iniciativas</th>
+                                    <th>tipomaterial</th>
+                                    <th>productonuevo</th>
+                                    <th>adicional1</th>
+                                    <th>adicional2</th>
+                                    <th>adicional3</th>
+                                    <th>adicional4</th>
+                                    <th>adicional5</th>
+                                    <th>adicional6</th>
+                                    <th>adicional7</th>
+                                    <th>adicional8</th>
+                                    <th>adicional9</th>
+                                    <th>adicional10</th>
                                 </tr>
                             </thead>
-                            <!--<tbody>
-                                <tr>
-                                    <td>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                            <label class="custom-control-label" for="customCheck2">&nbsp;</label>
-                                        </div>
-                                    </td>
-                                    <td><a href="apps-ecommerce-orders-details.html" class="text-body font-weight-bold">#BM9708</a> </td>
-                                    <td>
-                                        August 05 2018 <small class="text-muted">10:29 PM</small>
-                                    </td>
-                                    <td>
-                                        <h5><span class="badge badge-success-lighten"><i class="mdi mdi-coin"></i> Paid</span></h5>
-                                    </td>
-                                    <td>
-                                        $176.41
-                                    </td>
-                                    <td>
-                                        Mastercard
-                                    </td>
-                                    <td>
-                                        <h5><span class="badge badge-info-lighten">Shipped</span></h5>
-                                    </td>
-                                    <td>
-                                        <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-eye"></i></a>
-                                        <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                        <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                                    </td>
-                                </tr>
+                            <tbody id="tbodyExcel">
 
-
-
-
-                            </tbody>-->
+                            </tbody>
                         </table>
                     </div>
                 </div>

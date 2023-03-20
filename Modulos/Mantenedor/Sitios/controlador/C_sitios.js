@@ -88,7 +88,7 @@ function getListaSitios() {
                 const value = entry;
                 option = document.createElement('option');
                 option.text = value[1]['DESCRIPCION_CI'];
-                option.value = value[1]['CODIGO_CI'];
+                option.value = value[1]['CODIGO_CI']+'.-'+value[1]['DESCRIPCION_CI'];
                 //console.log(value[1]['CODIGO_CI']);
                 fragment.appendChild(option);
             })
@@ -100,33 +100,61 @@ function getListaSitios() {
             aler_simple(2, 'Error', 'No existen Registros ');
         });
 
-       
-
-
-
 }
 
 function crearSitio(){
+
+    //data from form
+    let nombreSitio = document.getElementById('nombreSitio').value;
+    let manejaStock = document.getElementById('manejaStock').value;
+    let urlSitio = document.getElementById('urlSitio').value;
+    let estadoSitio = document.getElementById('estadoSitio').value;
+    let tipoPago = document.getElementById('tipoPago').value;
+    let tipoSitio = document.getElementById('tipoSitio').value;
+
+    let data = new Object();
+    data['token'] = token = sessionStorage.getItem("token");
+    data['id_user'] = idUser = sessionStorage.getItem("id_user");
+    data['dato'] = {
+        "nombre":nombreSitio,
+        "maneja_stock":manejaStock,
+        "url":urlSitio,
+        "estado":estadoSitio,
+        "tipo_pago":tipoPago,
+        "tipo_sitio":tipoSitio
+    };
+     
+    $("#content_principal").LoadingOverlay("show");
+
+    console.log(data);
+    var myHeaders = new Headers();
+
+    //myHeaders.append("Access-Control-Allow-Origin", "*");
+    myHeaders.append("Content-Type", "application/json");
+    var requestOptions = {
+        method: 'PUT',
+        body: JSON.stringify(data),
+        headers: myHeaders,
+        redirect: 'follow'
+        
+    };
+    //console.log(myHeaders)
+    fetch(url_base + "/sitios/new", requestOptions)
+        .then(Response => Response.json())
+        .then(ojb => {
+            $("#content_principal").LoadingOverlay("hide");
+            console.log(ojb);
+            aler_simple(1, 'Creado', 'Creado con éxito');
+            $("#content_principal").LoadingOverlay("hide", true);
+            location.reload();
+        })
+        .catch(err => {
+            aler_simple(2, 'Error', 'No existen Registros ');
+        });
+}
+
+function showModal(){
     $("#modalCrearSitio").modal('show');
-    let modal = document.getElementById("modalCrearSitio");
-    /*
-    let btn = document.getElementById("botonNuevoSitio");
-    
-    
-    let span = document.getElementsByClassName("close")[0];
-    btn.onclick = function() {
-        modal.style.display = "block";
-      }
-      
-      // When the user clicks on <span> (x), close the modal
-      span.onclick = function() {
-        modal.style.display = "none";
-    }
-    window.onclick = function(event) {
-        if (event.target == modal) {
-          modal.style.display = "none";
-        }
-    }*/
 }
 
 

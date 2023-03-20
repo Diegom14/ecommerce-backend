@@ -62,6 +62,53 @@ function close_seccion() {
 
 }
 
+function showModal(){
+    $("#modalCambioClave").modal('show');
+}
+
+function cambioClave() {
+
+    let dat = new Object();
+    dat['usuario'] = document.getElementById("usuario").value;
+    dat['clave'] = document.getElementById("password").value;
+
+    var myHeaders = new Headers();
+
+    myHeaders.append("Content-Type", "application/json");
+    var requestOptions = {
+        method: 'POST',
+        body: JSON.stringify(dat),
+        headers: myHeaders,
+        redirect: 'follow'
+    };
+    fetch(url_base + "/usuario/autentificacion", requestOptions)
+        .then(Response => Response.json())
+        .then(ojb => {
+            console.log(ojb);
+            if (ojb['STATUS'] == true) {
+                sessionStorage.setItem("nombre", ojb['NOMBRE']);
+                sessionStorage.setItem("email", ojb['EMAAIL']);
+                sessionStorage.setItem("autentificacion", ojb['STATUS']);
+                sessionStorage.setItem("id_user", ojb['ID_USER']);
+                sessionStorage.setItem("email", ojb['EMAIL']);
+                sessionStorage.setItem("token", ojb['TOKEN']);
+                sessionStorage.setItem("expiracion", ojb['EXPIRACION']);
+                aler_simple(1, 'Bienvenido', 'Sr@: ' + ojb['NOMBRE']);
+                location.href = "main.html";
+
+            } else {
+                aler_simple(2, 'Fallido', ojb['MENSAJE']);
+
+            }
+
+        })
+        .catch(err => {
+            aler_simple(3, 'Fallido', ojb['MENSAJE']);
+        });
+
+
+}
+
 function datatable_ini(id) {
 
     $('#' + id).DataTable({
@@ -69,5 +116,16 @@ function datatable_ini(id) {
         buttons: [
             'copy', 'csv', 'excel', 'pdf', 'print'
         ]
+    });
+}
+function dataTableCatalogo(id) {
+
+    $('#' + id).DataTable({
+        dom: 'Bfrtip',
+        scrollY: 400,
+        scrollX: true,
+        scrollCollapse: false,
+        pageLength : 20,
+        buttons: false
     });
 }
