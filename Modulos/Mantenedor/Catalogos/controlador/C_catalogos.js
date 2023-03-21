@@ -15,6 +15,8 @@ function onReady(){
         $("#span_nombre_usuario").html(nombre_usuario)
     }
     leerExcel();
+    
+
 
 }
 
@@ -23,7 +25,7 @@ function leerExcel(){
     $("#tablaExcel").dataTable().fnDestroy();
     const input = document.getElementById('excelFile');
     const table = document.getElementById('tablaExcel');
-    //let thead = document.createElement('thead');
+    let trHeadExcel = document.getElementById('trExcel');
     let tbody = document.getElementById('tbodyExcel');
     let fragment = document.createDocumentFragment();
     let dataExcel;
@@ -37,13 +39,13 @@ function leerExcel(){
             rows.forEach((row,index) => {
   
                 if(index==0){
-                    /*const tr = document.createElement('tr');
+                    /*let tr = document.createElement('tr');
                     row.forEach((cell,index) => {
                         let th = document.createElement('th');
                         th.innerText = cell;
-                        tr.appendChild(th);
-                    });
-                    thead.appendChild(tr);*/
+                        trHeadExcel.appendChild(th);
+                    });*/
+                    
                 } else{
                     const tr = document.createElement('tr');
                     
@@ -59,6 +61,7 @@ function leerExcel(){
             });
 
             tbody.appendChild(fragment);
+            
             table.appendChild(tbody);
             dataTableCatalogo('tablaExcel');
         });
@@ -67,9 +70,8 @@ function leerExcel(){
     
     let botonCargar = document.getElementById('botonCargarExcel');
     botonCargar.addEventListener('click', () => {
-        console.log(dataExcel);
+        //console.log(dataExcel);
         cargarExcel(dataExcel);
-        
     })
     
     
@@ -81,7 +83,7 @@ function cargarExcel(datos){
     data['token'] = token = sessionStorage.getItem("token");
     data['iduser'] = idUser = sessionStorage.getItem("id_user");
     data['data'] = datos; 
-    //$("#content_principal").LoadingOverlay("show");
+    $("#content_principal").LoadingOverlay("show");
 
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -109,16 +111,18 @@ function cargarExcel(datos){
                 
                 //$("#tablaExcel").destroy();
                 //document.getElementById('tablaExcel').remove();
-                $("#tablaExcel").dataTable().fnDestroy();
+                //$("#tablaExcel").dataTable().fnDestroy();
                 let errores = '';
-                document.getElementById('trExcel').remove();
-                document.getElementById('tbodyExcel').remove();
+                //document.getElementById('trExcel').remove();
+                //document.getElementById('tbodyExcel').remove();
 
                 
 
                 let fragment = document.createDocumentFragment();
-                let theadExcel = document.getElementById('theadExcel');
-                let tbodyExcel = document.createElement('tbody');
+                let theadErrores = document.getElementById('theadErrores');
+                let tbodyErrores = document.getElementById('tbodyErrores');
+                
+                /*
                 let trHead = document.createElement('tr');
                 
                 let thSku = document.createElement('th');
@@ -130,7 +134,7 @@ function cargarExcel(datos){
                 trHead.appendChild(thError);
 
                 theadExcel.appendChild(trHead);
-                
+                */
 
                 
                 /*if(ojb['errores']){
@@ -144,31 +148,37 @@ function cargarExcel(datos){
 
                     document.appendChild(tableError);
                 }*/
-                Object.entries(ojb['errores']).map(entry => {
-                    let tr = document.createElement('tr');
-                    let tdSku = document.createElement('td');
-                    let tdError = document.createElement('td');
+                
+                if(ojb['errores']){
+                    Object.entries(ojb['errores']).map(entry => {
+                        let tr = document.createElement('tr');
+                        let tdSku = document.createElement('td');
+                        let tdError = document.createElement('td');
+                        
+                        tdSku.innerText = entry[1]['sku'];
+                        tr.appendChild(tdSku);
+    
+                        tdError.innerText = entry[1]['error'];
+                        tr.appendChild(tdError);
+                        tr.style.backgroundColor = "red";
+                        tr.style.color = "white";
+                        tbodyErrores.appendChild(tr);
+                        //errores = errores+entry[1]['sku']+": "+entry[1]['error']+"\n";
+                        
+                        
+                    })
                     
-                    tdSku.innerText = entry[1]['sku'];
-                    tr.appendChild(tdSku);
-
-                    tdError.innerText = entry[1]['error'];
-                    tr.appendChild(tdError);
-                    tr.style.backgroundColor = "red";
-                    tr.style.color = "white";
-                    tbodyExcel.appendChild(tr);
-                    //errores = errores+entry[1]['sku']+": "+entry[1]['error']+"\n";
+                    document.getElementById('tablaErrores').appendChild(tbodyErrores);
                     
-                    
-                })
-                document.getElementById('tablaExcel').appendChild(tbodyExcel);
+                }
+                
                     
                 
                 
                 //console.log(ojb['errores'][0]);
-                $("#content_principal").LoadingOverlay("hide", true);
+                //$("#content_principal").LoadingOverlay("hide", true);
                 //$("#tablaExcel").html('');
-
+                
                 //location.reload();
             })
             .catch(err => {
@@ -177,6 +187,7 @@ function cargarExcel(datos){
                 
             });
             
+            document.getElementById('tablaErrores').focus();
             // Add the rows to the table
             //console.log(rows[0]);
 }
