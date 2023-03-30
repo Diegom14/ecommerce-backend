@@ -1,3 +1,4 @@
+
 if (document.readyState !== 'loading') {
     onReady();
 } else {
@@ -6,141 +7,161 @@ if (document.readyState !== 'loading') {
     });
 }
 
-
 function onReady(){
+    
     if (id_user === null) {
-        window.location.href = 'index.php';
+        window.location.href = 'index.html';
     } else {
         $("#span_nombre_usuario").html(nombre_usuario)
     }
-    getListaSitios();
+    
+    leerExcel();
 
 }
 
-function getListaSitios() {
+function leerExcel(){
+    $("#tablaExcel").dataTable().fnDestroy();
+    const input = document.getElementById('excelFile');
+    const table = document.getElementById('tablaExcel');
+    let tbody = document.getElementById('tbodyExcel');
+    let fragment = document.createDocumentFragment();
+    let cabeceraExcel = [];
+    let dataExcel = [];
+    
+    input.addEventListener('change', (event) => {
+        $("#tablaExcel").dataTable().fnDestroy();
+        document.getElementById('tbodyExcel').innerHTML = "";
+        document.getElementById('tbodyErrores').innerHTML = "";
+        const file = event.target.files[0];
+        document.getElementById('nombreArchivo').innerText = file.name;
+        
+        readXlsxFile(file).then((rows) => {
+            //dataExcel = rows;
+            rows.forEach((row,index) => {
+  
+                if(index==0){
+                    
+                    row.forEach((cell,index) => {
+                        
+                        cabeceraExcel.push(cell);
+                        //cabeceraExcel[cell] = cell;
+                        
+                    });
+                    
+                } else{
+                    const tr = document.createElement('tr');
+                    let dato = new Object();
+                    row.forEach((cell,index) => {
+                        dato[cabeceraExcel[index]] = cell;
+                        let td = document.createElement('td');
+                        td.innerText = cell;
+                        tr.appendChild(td);
+                    });
+                    dataExcel.push(dato);
+                    fragment.appendChild(tr);
+                }
+                
+            });
 
+            //console.log(cabeceraExcel);
+            //console.log(dataExcel);
+            tbody.appendChild(fragment);
+            
+            table.appendChild(tbody);
+            dataTableCatalogo('tablaExcel');
+        });
+        
+    });
+    
+    let botonCargar = document.getElementById('botonCargarExcel');
+    botonCargar.addEventListener('click', () => {
+        //console.log(dataExcel);
+        cargarExcel(dataExcel);
+    })   
+    
+}
+
+function cargarExcel(datos){
+    let errores = false;
     let data = new Object();
     data['token'] = token = sessionStorage.getItem("token");
-    data['idUser'] = idUser = sessionStorage.getItem("id_user")
-     
+    data['iduser'] = idUser = sessionStorage.getItem("id_user");
+    data['data'] = datos; 
     $("#content_principal").LoadingOverlay("show");
 
+    //let jsonData = JSON.stringify(data);
+    //console.log(jsonData);
     var myHeaders = new Headers();
-
-    //myHeaders.append("Access-Control-Allow-Origin", "*");
     myHeaders.append("Content-Type", "application/json");
     var requestOptions = {
         method: 'POST',
         body: JSON.stringify(data),
         headers: myHeaders,
         redirect: 'follow'
-        
     };
     //console.log(myHeaders)
-    fetch(url_base + "/sitios/listar", requestOptions)
-        .then(Response => Response.json())
-        .then(ojb => {
-            $("#content_principal").LoadingOverlay("hide");
-            
-            let body = document.getElementsByTagName('tbody')[0];
-            if (body) {
-                body.remove();
-                $("#tablaSitios").dataTable().fnDestroy();
-
-            }
-            $("#content_principal").LoadingOverlay("hide", true);
-            let tablaSitios = document.getElementById('tablaSitios');
-            let bodySitios = document.createElement('tbody');
-            bodySitios.setAttribute('id', 'lista_html');
-            
-            Object.entries(ojb['sitios'])
-            .map(entry => {
-                const [key, value] = entry;
-                let row = document.createElement('tr');  
+    fetch(url_base + "/catalogo/Newproducto/", requestOptions)
+    .then(Response => Response.json())
+    .then(ojb => {
+        
+        $("#content_principal").LoadingOverlay("hide");
+        
+        aler_simple(1, 'Creado',
+        `
+        SKU Insertados: ${ojb['total_sku_insertados']}\n
+        SKU Actualizados: ${ojb['total_sku_Actualizados']}\n
+        SKU Erróneos: ${ojb['total_sku_erroneos']}\n
+        Total Procesados: ${ojb['total_sku_procesado']}
+         `
+        );
+        $("#tablaErrores").dataTable().fnDestroy();
+        let tbodyErrores = document.getElementById('tbodyErrores');
+        tbodyErrores.innerHTML = "";
+        
+        if(ojb['errores']){
+            Object.entries(ojb['errores']).map(entry => {
+                let tr = document.createElement('tr');
+                let tdSku = document.createElement('td');
+                let tdError = document.createElement('td');
                 
-                Object.entries(value).map(dataCol =>{
-                    const [key2, value2] = dataCol;
-                    let col = document.createElement('td');
-                    col.innerText = value2;
-                    row.appendChild(col);
-                })
-
-                bodySitios.appendChild(row);
-
+                tdSku.innerText = entry[1]['sku'];
+                tr.appendChild(tdSku);
+                tdError.innerText = entry[1]['error'];
+                tr.appendChild(tdError);
+                tr.style.backgroundColor = "red";
+                tr.style.color = "white";
+                tbodyErrores.appendChild(tr)
+                //errores = errores+entry[1]['sku']+": "+entry[1]['error']+"\n";
+                
             })
-            tablaSitios.appendChild(bodySitios);            
-            datatable_ini('tablaSitios');
-
-            let selectTipoPago = document.getElementById('tipoPago');
-            let child = selectTipoPago.lastElementChild;
-            while(child){
-                selectTipoPago.removeChild(child);
-                child = selectTipoPago.lastElementChild;
-            }
             
-            const fragment = document.createDocumentFragment();
-            let option = document.createElement('option');
-            option.text = 'SELECCIONE';
-            fragment.appendChild(option);
-
-            Object.entries(ojb['tipo_pago'])
-            .map(entry => {
-                const value = entry;
-                option = document.createElement('option');
-                option.text = value[1]['DESCRIPCION_CI'];
-                option.value = value[1]['CODIGO_CI'];
-                //console.log(value[1]['CODIGO_CI']);
-                fragment.appendChild(option);
-            })
-
-            selectTipoPago.appendChild(fragment);
-
-        })
-        .catch(err => {
-            aler_simple(2, 'Error', 'No existen Registros ');
-        });
-
-       
-
-
-
-}
-
-function crearSitio(){
-    let modal = document.getElementById("modalCrearSitio");
-    console.log(modal);
-    let btn = document.getElementById("botonNuevoSitio");
-    
-    
-    let span = document.getElementsByClassName("close")[0];
-    btn.onclick = function() {
-        modal.style.display = "block";
-      }
-      
-      // When the user clicks on <span> (x), close the modal
-      span.onclick = function() {
-        modal.style.display = "none";
-    }
-    window.onclick = function(event) {
-        if (event.target == modal) {
-          modal.style.display = "none";
+            document.getElementById('tablaErrores').appendChild(tbodyErrores);
+            datatable_ini('tablaErrores');
+            errores = true;
+            
         }
-    }
+    })
+    .catch(err => {
+        console.log(err);
+        aler_simple(2, 'Error', `Formato del Archivo Incorrecto`);
+        
+    })
+    .finally(() => {
+        console.log(errores);
+        if(errores==true){
+            console.log(errores);
+            document.getElementById('tablaErrores').focus();
+        }
+    });
+        
+    document.getElementById('tablaErrores').focus();
+
 }
 
 
 
-$("#basic-datatable").DataTable({
-    keys: !0,
-    language: {
-        paginate: {
-            previous: "<i class='mdi mdi-chevron-left'>",
-            next: "<i class='mdi mdi-chevron-right'>"
-        }
-    },
-    drawCallback: function() {
-        $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
-    },
-});
 
-//let token = sessionStorage.getItem("token");
+
+
+
+
