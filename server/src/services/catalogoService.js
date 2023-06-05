@@ -13,7 +13,7 @@ const getAllUsers = async () => {
 const getOneUserById = async (userId) => {
     const user = await User.findByPk(userId);
     //console.log(user);
-    return user ;
+    return user;
 };
 
 
@@ -34,9 +34,6 @@ const createUser = async (newUser) => {
     // if(user){
     //     return 'Usuario ya existe';
     // }
-
-    
-    
 };
 const updateUser = (userId) => {
     return;

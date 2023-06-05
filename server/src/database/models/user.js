@@ -2,19 +2,35 @@
 //const db = require('../config/config.json');
 //const db = require('sequelize');
 const { DataTypes } = require('sequelize');
-const db = require('../db.config');
+const { dbEcommerce, dbCentral } = require('../db.config');
 
-const User = db.define('tb_credenciales', {
+const User = dbEcommerce.define('tb_credenciales', {
     id_user: {
         type: DataTypes.INTEGER,
-        primaryKey: true
+        primaryKey: true,
+        required: true
+    },
+    email_c:{
+        type: DataTypes.STRING,
+        required: true
     },
     nombre_c: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        required: true
     },
     clave_c:{
-        type: DataTypes.STRING
-    } 
+        type: DataTypes.STRING,
+        required: true
+    },
+    estado_c: {
+        type: DataTypes.STRING,
+        required: true
+    },
+    privilegio_c: {
+        type: DataTypes.STRING,
+        required: true
+    }
+    
 
 }); 
 
