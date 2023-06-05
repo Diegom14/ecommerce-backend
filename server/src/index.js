@@ -20,7 +20,8 @@ const secret = process.env.SECRET;
 
 //console.log(secret);
 
-/*async function dbConn(){
+/*
+async function dbConn(){
     try {
         await db.authenticate();
         console.log("Database Online");
